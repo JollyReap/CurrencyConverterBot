@@ -11,20 +11,21 @@ def get_html(url, headers):
 def rate_doll(html):
     soup = BeautifulSoup(html, 'lxml')
     try:
-        doll = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text.replace(',', '.')
-        dollar = str(doll)
-    except:
-        dollar = 'Rate of dollar not found'
-    print(dollar)
+        doll = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum')
 
+    except:
+        doll = 'Rate of dollar not found'
+
+    return doll.text
 
 def rate_euro(html):
     soup = BeautifulSoup(html, 'lxml')
     try:
-        euro = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text.replace(',', '.')
+        euro = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum')
     except:
         euro = 'Rate of euro not found'
-    print(euro)
+
+    return euro.text
 
 
 def send_result(bot_tocken, chatID, message):
@@ -45,7 +46,8 @@ def main():
     bot_token = '1757768498:AAH1sMha-FvYmelOMJcN2lwYEsVRsbTdUK4'
     chatID = '1156779262'
 
-    #bot = send_result(bot_token, chatID, f'Курс доллара = {doll_rate}\nКурс евро = {euro_rate}')
+
+    bot = send_result(bot_token, chatID, f'Курс доллара = {doll_rate}\nКурс евро = {euro_rate}')
 
 
 if __name__ == '__main__':
