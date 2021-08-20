@@ -13,8 +13,15 @@ def rate_doll(html):
     try:
         doll = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text
     except:
-        doll = 'Rate not found'
-    print(doll)
+        doll = 'Rate of dollar not found'
+
+
+def rate_euro(html):
+    soup = BeautifulSoup(html, 'lxml')
+    try:
+        euro = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text
+    except:
+        euro = 'Rate of euro not found'
 
 
 def main():
@@ -25,7 +32,7 @@ def main():
     html_doll = get_html(doll_url, headers)
     html_euro = get_html(euro_url, headers)
     doll_rate = rate_doll(html_doll)
-
+    euro_rate = rate_euro(html_euro)
 
 
 if __name__ == '__main__':
