@@ -11,17 +11,26 @@ def get_html(url, headers):
 def rate_doll(html):
     soup = BeautifulSoup(html, 'lxml')
     try:
-        doll = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text
+        doll = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text.replace(',', '.')
+        dollar = str(doll)
     except:
-        doll = 'Rate of dollar not found'
+        dollar = 'Rate of dollar not found'
+    print(dollar)
 
 
 def rate_euro(html):
     soup = BeautifulSoup(html, 'lxml')
     try:
-        euro = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text
+        euro = soup.find('div', class_='chart__info__row js-ticker').find('span', class_='chart__info__sum').text.replace(',', '.')
     except:
         euro = 'Rate of euro not found'
+    print(euro)
+
+
+def send_result(bot_tocken, chatID, message):
+    url = f'https://api.telegram.org/bot{bot_tocken}/sendMessage?chat_id={chatID}&text={message}'
+    response = requests.get(url)
+    return response.json()
 
 
 def main():
@@ -33,6 +42,10 @@ def main():
     html_euro = get_html(euro_url, headers)
     doll_rate = rate_doll(html_doll)
     euro_rate = rate_euro(html_euro)
+    bot_token = '1757768498:AAH1sMha-FvYmelOMJcN2lwYEsVRsbTdUK4'
+    chatID = '1156779262'
+
+    #bot = send_result(bot_token, chatID, f'Курс доллара = {doll_rate}\nКурс евро = {euro_rate}')
 
 
 if __name__ == '__main__':
